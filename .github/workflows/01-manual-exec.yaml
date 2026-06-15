@@ -43,7 +43,7 @@ jobs:
 
       #instalação de dependências
       - name: Instalando as dependências
-        run: yarn install --frozen-lockfile # Garante que instalará exatamente o que está no yarn.lock
+        run: yarn install #--frozen-lockfile # Garante que instalará exatamente o que está no yarn.lock
 
       # Instalação das dependências para o Playwright
       - name: Instalando os browsers e dependências do Playwright
