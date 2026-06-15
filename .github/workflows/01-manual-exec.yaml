@@ -34,7 +34,7 @@ jobs:
       - name: Instalando o Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24.x #não usar a última versão, pois as vezes gera alguns errros
+          node-version: 22.x #não usar a última versão, pois as vezes gera alguns errros
           cache: 'yarn' # Agiliza as próximas execuções guardando as dependências em cache
       
       #instalação do yarn
