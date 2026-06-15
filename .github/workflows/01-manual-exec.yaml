@@ -51,10 +51,6 @@ jobs:
           yarn playwright install
           yarn playwright install-deps    
 
-      #execução dos testes
-      - name: Executando os testes
-        run: yarn run test
-
       #execução dos testes (gera o XML e o HTML juntos)
       - name: Executando os testes
         run: yarn run test
