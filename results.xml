@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.005" tests="4" failures="0">
+  <testsuite name="Root Suite" timestamp="2026-06-15T21:58:25" tests="0" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Testes do login do usuário" timestamp="2026-06-15T21:58:25" tests="4" file="C:\projetos\Nova pasta\disciplina-programacao-automacao-desafio\test\cadastroUsuariosSites.test.js" time="0.002" failures="0">
+    <testcase name="Testes do login do usuário Validar o login do usuário com e-mail, senha e credencial válidos" time="0.000" classname="Validar o login do usuário com e-mail, senha e credencial válidos">
+    </testcase>
+    <testcase name="Testes do login do usuário Validar que usuário e senha válidos, mas com credencial expirada não realiza o login" time="0.000" classname="Validar que usuário e senha válidos, mas com credencial expirada não realiza o login">
+    </testcase>
+    <testcase name="Testes do login do usuário Validar que usuário com e-mail não cadastrado não realiza o login" time="0.000" classname="Validar que usuário com e-mail não cadastrado não realiza o login">
+    </testcase>
+    <testcase name="Testes do login do usuário Validar que usuário válido e senha inválida não realiza o login" time="0.000" classname="Validar que usuário válido e senha inválida não realiza o login">
+    </testcase>
+  </testsuite>
+</testsuites>

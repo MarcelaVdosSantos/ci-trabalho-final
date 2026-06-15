@@ -1,0 +1,28 @@
+{
+  "name": "np",
+  "version": "1.0.0",
+  "description": "npm init",
+  "homepage": "https://github.com/MarcelaVdosSantos/disciplina-programacao-automacao-desafio#readme",
+  "bugs": {
+    "url": "https://github.com/MarcelaVdosSantos/disciplina-programacao-automacao-desafio/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcelaVdosSantos/disciplina-programacao-automacao-desafio.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter mocha-multi-reporters --reporter-options configFile=config-reporters.json"
+  },
+  "dependencies": {
+    "mocha": "^11.7.6"
+  },
+  "devDependencies": {
+    "mocha-junit-reporter": "^2.2.1",
+    "mocha-multi-reporters": "^1.5.1",
+    "mochawesome": "^7.1.4"
+  }
+}

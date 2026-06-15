@@ -1,0 +1,73 @@
+# CI 1º Nível - Disparo Manual
+
+#nome da pipeline
+name: '01- Execução Manual'
+
+#workflow
+on:
+  workflow_dispatch:
+
+# Permissões necessárias para o test-reporter conseguir escrever os resultados no GitHub
+permissions:
+  id-token: write
+  contents: read
+  checks: write
+
+# jobs - executadores de tarefas
+jobs:
+  #job
+  test:
+    #máquina onde o job irá executar / utilizando a versão mais recente do Ubuntu
+    runs-on: ubuntu-latest
+
+    #passos que serão executados pelo job
+    steps:
+      #clonar o projeto
+      - name: Checkout d código
+        uses: actions/checkout@v4
+
+      #instalação do nodejs
+      - name: Instalando o Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x #não usar a última versão, pois as vezes gera alguns errros
+          cache: 'yarn' # Agiliza as próximas execuções guardando as dependências em cache
+      
+      #instalação do yarn
+      - name: Instalando o yarn
+        run: npm install -g yarn
+
+      #instalação de dependências
+      - name: Instalando as dependências
+        run: yarn install --frozen-lockfile # Garante que instalará exatamente o que está no yarn.lock
+
+      # Instalação das dependências para o Playwright
+      - name: Instalando os browsers e dependências do Playwright
+        run: |
+          yarn playwright install
+          yarn playwright install-deps    
+
+      #execução dos testes
+      - name: Executando os testes
+        run: yarn run test
+
+      #execução dos testes (gera o XML e o HTML juntos)
+      - name: Executando os testes
+        run: yarn run test
+
+      #plugin lê o XML e exibe falhas no GitHub
+      - name: Exibir Resultados no GitHub
+        uses: dorny/test-reporter@v3
+        if: ${{ !cancelled() }} 
+        with:
+          name: Mocha Tests 
+          path: results.xml 
+          reporter: mocha-junit-reporter 
+
+      #salva a pasta HTML gerada pelo Mochawesome
+      - name: Salvar Relatorio HTML para Download
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }} 
+        with:
+          name: relatorio-testes-html 
+          path: mochawesome-report/
