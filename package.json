@@ -23,6 +23,7 @@
   "devDependencies": {
     "mocha-junit-reporter": "^2.2.1",
     "mocha-multi-reporters": "^1.5.1",
-    "mochawesome": "^7.1.4"
+    "mochawesome": "^7.1.4",
+    "playwright": "^1.61.0"
   }
 }

@@ -21,3 +21,5 @@ Execute os testes unitários: yarn run tes
 
 yarn add --dev mocha mocha-junit-reporter mochawesome mocha-multi-reporters
 
+instalação do pacote playwright
+yarn add -D playwright
