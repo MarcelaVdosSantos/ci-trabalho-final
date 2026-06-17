@@ -10,7 +10,7 @@ on:
   #comando para que semper que houver um push na master a pipeline exeute  
   push:
     branches:
-      - master  
+      - main
 
 jobs:
   #job inspecao
