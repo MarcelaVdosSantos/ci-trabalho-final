@@ -124,7 +124,7 @@ jobs:
           allure_history: allure-history
           allure_report: allure-report
 
-      #após o push
+      #relatório allure após o push
       - name: Postar Resumo do Allure
         uses: allure-framework/allure-action@v0
         with:
@@ -141,4 +141,4 @@ jobs:
 
     steps:
       - name: Simulação de Deploy
-        run: echo 'Deploy sendo realizado'
+        run: echo 'Deploy sendo realizado!!'
