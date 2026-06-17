@@ -7,6 +7,11 @@ name: "04- Execução Integrada"
 on:
   workflow_dispatch:
 
+  #comando para que semper que houver um push na master a pipeline exeute  
+  push:
+    branches:
+      - master  
+
 jobs:
   #job inspecao
   inspecao:
@@ -95,7 +100,7 @@ jobs:
       #plugin lê o XML e exibe falhas no GitHub
       - name: Exibir Resultados no GitHub
         uses: dorny/test-reporter@v3
-        if: ${{ !cancelled() }}
+        if: ${{ always() }}
         with:
           name: Mocha Tests
           path: results.xml
@@ -104,11 +109,31 @@ jobs:
       #salva a pasta HTML gerada pelo Mochawesome
       - name: Salvar Relatorio HTML para Download
         uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+        if: ${{ always() }}
         with:
           name: relatorio-testes-html
           path: mochawesome-report/
 
+      #relatório de testes Allure
+      #Allure relatório HTML      
+      - name: Gerar Relatório Allure HTML
+        uses: simple-elf/allure-report-action@v1
+        if: always()
+        with:
+          allure_results: allure-results
+          allure_history: allure-history
+          allure_report: allure-report
+
+      #após o push
+      - name: Postar Resumo do Allure
+        uses: allure-framework/allure-action@v0
+        with:
+          report-directory: "./allure-report"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          sections: |
+            new
+            flaky
+     
   #job deploy
   deploy:
     runs-on: ubuntu-latest
