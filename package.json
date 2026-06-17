@@ -15,8 +15,14 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --reporter mocha-multi-reporters --reporter-options configFile=config-reporters.json"
-  },
+    "test:mocha": "mocha --reporter mocha-multi-reporters --reporter-options configFile=config-reporters.json",
+    "test:jest": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test": "npx playwright test",
+    "start": "lite-server",
+    "lint": "npm run lint:ts && npm run lint:format",
+    "lint:ts": "tsc -b jsconfig.json",
+    "lint:format": "prettier --check --ignore-path .gitignore ."
+   },
   "dependencies": {
     "mocha": "^11.7.6"
   },
