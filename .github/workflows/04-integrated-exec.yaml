@@ -7,7 +7,7 @@ name: "04- Execução Integrada"
 on:
   workflow_dispatch:
 
-  #comando para que semper que houver um push na master a pipeline exeute  
+  #comando para que semper que houver um push na master a pipeline exeute
   push:
     branches:
       - main
@@ -115,7 +115,7 @@ jobs:
           path: mochawesome-report/
 
       #relatório de testes Allure
-      #Allure relatório HTML      
+      #Allure relatório HTML
       - name: Gerar Relatório Allure HTML
         uses: simple-elf/allure-report-action@v1
         if: always()
@@ -133,7 +133,7 @@ jobs:
           sections: |
             new
             flaky
-     
+
   #job deploy
   deploy:
     runs-on: ubuntu-latest

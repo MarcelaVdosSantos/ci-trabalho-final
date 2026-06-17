@@ -41,41 +41,43 @@ yarn add -D playwright
 - Armazenamento/publicação do relatório na pipeline.
 - Criação de um README explicando a solução e os conceitos utilizados.
 
-
-
 # 🚀 Disciplina de Programação e Automação - Desafio
 
 Este projeto contém uma esteira automatizada de testes de integração e testes funcionais utilizando **Mocha** e **Playwright**. A pipeline está configurada para validar o estilo de código (Lint) e executar os testes de forma agendada no GitHub Actions.
 
 ## 🛠️ Tecnologias Utilizadas
 
-*   **Node.js** (v22.x)
-*   **Mocha** - Framework de Testes
-*   **Playwright** - Automação de Navegador/Ambiente
-*   **TypeScript / TSC** - Verificação estática de tipos
-*   **Prettier** - Formatação de código
-*   **GitHub Actions** - Integração Contínua (CI)
+- **Node.js** (v22.x)
+- **Mocha** - Framework de Testes
+- **Playwright** - Automação de Navegador/Ambiente
+- **TypeScript / TSC** - Verificação estática de tipos
+- **Prettier** - Formatação de código
+- **GitHub Actions** - Integração Contínua (CI)
 
 ## 📋 Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina:
-*   [Git](https://git-scm.com)
-*   [Node.js](https://nodejs.org)
-*   [Yarn](https://yarnpkg.com) (Gerenciador de pacotes)
+
+- [Git](https://git-scm.com)
+- [Node.js](https://nodejs.org)
+- [Yarn](https://yarnpkg.com) (Gerenciador de pacotes)
 
 ## 🔧 Instalação Passo a Passo
 
 1. Clone este repositório para a sua máquina local:
+
    ```bash
    git clone https://github.com
    ```
 
 2. Acesse a pasta do projeto:
+
    ```bash
    cd disciplina-programacao-automacao-desafio
    ```
 
 3. Instale todas as dependências do projeto:
+
    ```bash
    yarn install
    ```
@@ -88,24 +90,31 @@ Antes de começar, você vai precisar ter instalado em sua máquina:
 ## 🚀 Como Executar o Projeto Localmente
 
 ### 1. Iniciar o Servidor Local
+
 Para subir o servidor web da aplicação e disponibilizar o site para os testes, execute:
+
 ```bash
 yarn start
 ```
 
 ### 2. Executar a Validação de Código (Lint)
+
 Para checar se existem erros de sintaxe e se a formatação está dentro dos padrões definidos (TypeScript + Prettier):
+
 ```bash
 yarn lint
 ```
 
 Se precisar corrigir automaticamente os espaços e formatações do código com o Prettier, você pode rodar:
+
 ```bash
 npx prettier --write .
 ```
 
 ### 3. Rodar os Testes Automatizados
+
 Com o servidor de desenvolvimento rodando, execute o comando abaixo em um novo terminal para iniciar os testes com o Mocha:
+
 ```bash
 yarn test
 ```
@@ -113,6 +122,7 @@ yarn test
 ## ⚙️ Esteira de Integração Contínua (CI)
 
 O projeto possui uma pipeline configurada via GitHub Actions (`.github/workflows/`), que realiza os seguintes passos de forma automatizada:
+
 1. Valida a estrutura dos arquivos e configurações.
 2. Ativa o sistema de **Cache do Yarn** para agilizar execuções futuras.
 3. Roda a checagem estática do TypeScript e do Prettier (`yarn lint`).
