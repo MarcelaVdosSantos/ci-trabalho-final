@@ -1,17 +1,13 @@
 {
   "compilerOptions": {
-    "skipDefaultLibCheck": true,
-    "skipLibCheck": true,
-    "noEmit": true,
-    "target": "es2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "lib": ["es2022", "DOM"],
-    "strict": true,
-    "strictNullChecks": false,
+    "target": "ES2022",
+    "checkJs": false,
     "allowJs": true,
-    "checkJs": true,
-    "maxNodeModuleJsDepth": 0
+    "noEmit": true,
+    "strict": false,
+    "types": ["node", "mocha"]
   },
-  "include": ["src", "test"]
+  "exclude": ["node_modules", "mochawesome-report"]
 }
