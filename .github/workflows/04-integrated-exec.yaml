@@ -115,24 +115,23 @@ jobs:
           path: mochawesome-report/
 
       #relatório de testes Allure
-      #Allure relatório HTML
-      - name: Gerar Relatório Allure HTML
-        uses: simple-elf/allure-report-action@v1
+      # Relatório de testes Allure Nativo
+      - name: Instalar utilitário do Allure
+        if: always()
+        run: npm install -g allure-commandline --save-dev
+
+      - name: Gerar Relatório HTML do Allure
+        if: always()
+        run: allure generate allure-results --clean -o allure-report
+
+      # Salva a pasta para você conseguir baixar os relatórios visuais no GitHub
+      - name: Salvar Relatorio Allure para Download
+        uses: actions/upload-artifact@v4
         if: always()
         with:
-          allure_results: allure-results
-          allure_history: allure-history
-          allure_report: allure-report
+          name: relatorio-allure-html
+          path: allure-report/
 
-      #relatório allure após o push
-      - name: Postar Resumo do Allure
-        uses: allure-framework/allure-action@v0
-        with:
-          report-directory: "./allure-report"
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          sections: |
-            new
-            flaky
 
   #job deploy
   deploy:
