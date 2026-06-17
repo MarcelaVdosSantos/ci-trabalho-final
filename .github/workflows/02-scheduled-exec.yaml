@@ -10,7 +10,7 @@ on:
     schedule:
     #1 - minuto, 2 - hora, 3 - dia do mês, 4 -mês, 5 - dia da semana
     #executa às 18h
-        - cron:  '30 11 * * *'
+        - cron:  '0 13 * * *'
 
 #job irá executar as tarefas dentro da pipeline        
 jobs:

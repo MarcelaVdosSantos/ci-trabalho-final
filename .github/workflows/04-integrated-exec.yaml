@@ -1,0 +1,86 @@
+# CI 3º Nível - Pipeline Integrada ao Build do Código
+
+#nome da pipeline
+name: '04- Execução Integrada'
+
+#workflow
+on:
+  workflow_dispatch:
+
+jobs:
+  #job inspecao
+  inspecao:
+    #máquina onde o job irá executar / utilizando a versão mais recente do Ubuntu
+    runs-on: ubuntu-latest
+
+    #passos que serão executados pelo job
+    steps:
+      #clonar o projeto
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      #instalação do nodejs
+      - name: Instalando o Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x #não usar a última versão, pois as vezes gera alguns errros
+          cache: 'yarn' # Agiliza as próximas execuções guardando as dependências em cache
+      
+      #instalação do yarn
+      - name: Instalando o yarn
+        run: npm install -g yarn
+
+      #instalação de dependências
+      - name: Instalando as dependências
+        run: yarn install 
+
+      # inspeção do código
+      - name: Inspeção de Código
+        run: yarn lint
+
+  #job unidade
+  unidade:
+    runs-on: ubuntu-latest
+    needs: [inspecao]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+            node-version: 22.x
+
+      #instalação do yarn
+      - name: Instalando o yarn
+        run: npm install -g yarn
+
+      #instalação de dependências
+      - name: Instalando as dependências
+        run: yarn install 
+
+      # Instalação das dependências para o Playwright
+      - name: Instalando os browsers e dependências do Playwright
+        run: |
+          yarn playwright install
+          yarn playwright install-deps
+
+      #execução dos testes (gera o XML e o HTML juntos)
+      - name: Executando os testes
+        run: yarn run test
+
+      #plugin lê o XML e exibe falhas no GitHub
+      - name: Exibir Resultados no GitHub
+        uses: dorny/test-reporter@v3
+        if: ${{ !cancelled() }} 
+        with:
+          name: Mocha Tests
+          path: results.xml 
+          reporter: jest-junit
+
+      #salva a pasta HTML gerada pelo Mochawesome
+      - name: Salvar Relatorio HTML para Download
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }} 
+        with:
+          name: relatorio-testes-html
+          path: mochawesome-report/
