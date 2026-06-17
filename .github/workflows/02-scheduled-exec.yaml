@@ -17,7 +17,7 @@ jobs:
     #nome do job
     test:
         #máquina onde os jobs serão executados / versão atual do ubuntu
-        runs-on: ubunti-latest
+        runs-on: ubuntu-latest
         
         #passos do job
         steps:
@@ -27,7 +27,7 @@ jobs:
             #instalação do node
             - uses: actions/setup-node@v4
               with:
-               node-version: 22.x
+                  node-version: 22.x
 
             #instalação do yarn
             - name: Instalação do Yarn
