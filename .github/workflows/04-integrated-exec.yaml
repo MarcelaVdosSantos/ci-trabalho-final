@@ -132,7 +132,6 @@ jobs:
           name: relatorio-allure-html
           path: allure-report/
 
-
   #job deploy
   deploy:
     runs-on: ubuntu-latest
