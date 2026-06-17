@@ -17,7 +17,7 @@
   "scripts": {
     "test:mocha": "mocha --reporter mocha-multi-reporters --reporter-options configFile=config-reporters.json",
     "test:jest": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test": "npx playwright test",
+    "test": "mocha --reporter mocha-multi-reporters --reporter-options configFile=config-reporters.json",
     "start": "lite-server",
     "lint": "yarn lint:ts && yarn lint:format",
     "lint:ts": "tsc -b jsconfig.json",
