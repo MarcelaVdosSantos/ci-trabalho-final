@@ -61,7 +61,3 @@ jobs:
               with:
                 name: relatorio-testes-html 
                 path: mochawesome-report/
-
-                    
-
-    
