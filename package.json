@@ -22,7 +22,7 @@
     "lint": "npm run lint:ts && npm run lint:format",
     "lint:ts": "tsc -b jsconfig.json",
     "lint:format": "prettier --check --ignore-path .gitignore ."
-   },
+  },
   "dependencies": {
     "mocha": "^11.7.6"
   },

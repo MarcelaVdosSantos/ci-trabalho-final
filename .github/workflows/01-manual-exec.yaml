@@ -1,7 +1,7 @@
 # CI 1º Nível - Disparo Manual
 
 #nome da pipeline
-name: '01- Execução Manual'
+name: "01- Execução Manual"
 
 #workflow
 on:
@@ -35,8 +35,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22.x #não usar a última versão, pois as vezes gera alguns errros
-          cache: 'yarn' # Agiliza as próximas execuções guardando as dependências em cache
-      
+          cache: "yarn" # Agiliza as próximas execuções guardando as dependências em cache
+
       #instalação do yarn
       - name: Instalando o yarn
         run: npm install -g yarn
@@ -49,7 +49,7 @@ jobs:
       - name: Instalando os browsers e dependências do Playwright
         run: |
           yarn playwright install
-          yarn playwright install-deps    
+          yarn playwright install-deps
 
       #execução dos testes (gera o XML e o HTML juntos)
       - name: Executando os testes
@@ -58,16 +58,16 @@ jobs:
       #plugin lê o XML e exibe falhas no GitHub
       - name: Exibir Resultados no GitHub
         uses: dorny/test-reporter@v3
-        if: ${{ !cancelled() }} 
+        if: ${{ !cancelled() }}
         with:
-          name: Mocha Tests 
-          path: results.xml 
+          name: Mocha Tests
+          path: results.xml
           reporter: jest-junit
 
       #salva a pasta HTML gerada pelo Mochawesome
       - name: Salvar Relatorio HTML para Download
         uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }} 
+        if: ${{ !cancelled() }}
         with:
-          name: relatorio-testes-html 
+          name: relatorio-testes-html
           path: mochawesome-report/

@@ -1,63 +1,63 @@
 # CI 2º Nível - Disparo Agendado
 
 #nome da pipeline
-name: '02 - Execução Agendada'
+name: "02 - Execução Agendada"
 
 #workflow
 on:
-    workflow_dispatch:
-    #cronograma de execução
-    schedule:
+  workflow_dispatch:
+  #cronograma de execução
+  schedule:
     #1 - minuto, 2 - hora, 3 - dia do mês, 4 -mês, 5 - dia da semana
     #executa às 18h
-        - cron:  '0 13 * * *'
+    - cron: "0 13 * * *"
 
-#job irá executar as tarefas dentro da pipeline        
+#job irá executar as tarefas dentro da pipeline
 jobs:
-    #nome do job
-    test:
-        #máquina onde os jobs serão executados / versão atual do ubuntu
-        runs-on: ubuntu-latest
-        
-        #passos do job
-        steps:
-            #clone do projeto
-            - uses: actions/checkout@v4
+  #nome do job
+  test:
+    #máquina onde os jobs serão executados / versão atual do ubuntu
+    runs-on: ubuntu-latest
 
-            #instalação do node
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: 22.x
+    #passos do job
+    steps:
+      #clone do projeto
+      - uses: actions/checkout@v4
 
-            #instalação do yarn
-            - name: Instalação do Yarn
-              run: npm install -g yarn
-              
-            #instalação das dependências
-            - name: Instalação das dependências
-              run: yarn
-              
-            #instalação dos browsers do playwright
-            - name: Instalação dos browsers do playwright  
-              run: yarn playwright install --with-deps
+      #instalação do node
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
 
-            #execução dos testes
-            - name: Execução dos testes
-              run: yarn run test
+      #instalação do yarn
+      - name: Instalação do Yarn
+        run: npm install -g yarn
 
-            #plugin lê o XML e exibe falhas no GitHub
-            - name: Exibir Resultados no GitHub
-              uses: dorny/test-reporter@v3
-              if: ${{ !cancelled() }} 
-              with:
-                name: Mocha Tests 
-                path: results.xml 
-                reporter: jest-junit
+      #instalação das dependências
+      - name: Instalação das dependências
+        run: yarn
 
-            #salva a pasta HTML gerada pelo Mochawesome
-            - name: Salvar Relatorio HTML para Download
-              uses: actions/upload-artifact@v4
-              if: ${{ !cancelled() }} 
-              with:
-                name: relatorio-testes-html 
-                path: mochawesome-report/
+      #instalação dos browsers do playwright
+      - name: Instalação dos browsers do playwright
+        run: yarn playwright install --with-deps
+
+      #execução dos testes
+      - name: Execução dos testes
+        run: yarn run test
+
+      #plugin lê o XML e exibe falhas no GitHub
+      - name: Exibir Resultados no GitHub
+        uses: dorny/test-reporter@v3
+        if: ${{ !cancelled() }}
+        with:
+          name: Mocha Tests
+          path: results.xml
+          reporter: jest-junit
+
+      #salva a pasta HTML gerada pelo Mochawesome
+      - name: Salvar Relatorio HTML para Download
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: relatorio-testes-html
+          path: mochawesome-report/
