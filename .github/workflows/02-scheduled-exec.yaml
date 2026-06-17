@@ -7,6 +7,7 @@ name: "02 - Execução Agendada"
 on:
   workflow_dispatch:
   #cronograma de execução
+
   schedule:
     #1 - minuto, 2 - hora, 3 - dia do mês, 4 -mês, 5 - dia da semana
     #executa às 18h
