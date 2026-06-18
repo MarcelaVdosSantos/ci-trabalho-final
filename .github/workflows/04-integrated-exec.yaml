@@ -137,7 +137,7 @@ jobs:
       - name: Publish Test Report
         uses: ctrf-io/github-test-reporter@v1
         with:
-          report-path: './ctrf/*.json'
+          report-path: "./ctrf/*.json"
           summary-delta-report: true
           insights-report: true
           flaky-rate-report: true
@@ -146,7 +146,7 @@ jobs:
           upload-artifact: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: always()    
+        if: always()
 
   #job deploy
   deploy:
