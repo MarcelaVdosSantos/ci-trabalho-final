@@ -1,133 +1,79 @@
-## nome do projeto
+# Projeto de Automação de Testes - Esteira de CI/CD Completa
 
-CI-TRABALHO-FINAL
+Este repositório contém uma suíte de automação desenvolvida com **Mocha**, **Jest** e **Playwright**. O projeto conta com uma arquitetura de Integração Contínua (CI) estruturada em 4 pipelines automatizadas no GitHub Actions, garantindo a integridade do ecossistema a cada build.
 
-## sobre o projeto
+## Tecnologias e Frameworks Utilizados
 
-Trabalho final da disciplina de integração contínua. Foi utilizado um projeto já existente da disciplina de programação para automação de testes, foi criado 4 pipeline, onde:
-01-manual: com a execução manual
-02-scheduled: com a execução agendada
-03-post-deploy:
-04-integrated: Execução por push.
+*   **Node.js** (v22.x estável)
+*   **Mocha & Jest** - Frameworks para execução de testes unitários e funcionais
+*   **Playwright** - Framework para automação de testes End-to-End (E2E)
+*   **TypeScript / TSC** - Verificação estática e integridade do código JavaScript
+*   **Prettier** - Validação de formatação e padrões estéticos de código
+*   **Allure Report** - Dashboard gráfico interativo hospedado online via GitHub Pages
+*   **Mochawesome, Jest-JUnit & CTRF** - Geradores de artefatos de relatórios ricos e integração com o ecossistema GitHub
 
-## funcionalidades
 
-A api irá validar o login de usuários previamente cadastrados, validando login e senhas válidos e ativos
+## Estrutura das 4 Pipelines (GitHub Actions)
 
-## tecnologias utilizadas
+As esteiras de automação estão divididas em 4 fluxos complementares dentro da pasta `.github/workflows/`:
 
-node.js
+### 01 - Execução Manual (`workflow_dispatch`)
+*   **Objetivo:** Permitir execuções manuais sob demanda diretamente pela interface do GitHub para testes rápidos de validação.
+*   **Ações:** Faz o checkout, configura o cache do Yarn, baixa o Playwright, executa a suíte e gera relatórios XML (JUnit) e HTML (Mochawesome).
 
-## pré-requisito
+### 02 - Execução Agendada (`scheduled`)
+*   **Frequência:** Todos os dias automaticamente às **10:00 da manhã** (Horário de Brasília / 13:00 UTC).
+*   **Objetivo:** Aguar testes de regressão de rotina para auditar a estabilidade diária das dependências e da aplicação.
 
-É necessário ter isntalado ou ter acesso ao GitHub Ations e o Node.js 24.x
+### 03 - Execução por Deploy (`workflow_run`)
+*   **Gatilho:** Inicia de forma automatizada assim que as pipelines de `Execução Manual` ou `Execução Agendada` concluem o seu ciclo.
+*   **Objetivo:** Funcionar como um gatilho de *Smoke Test* de ciclo contínuo para verificar ambientes após uma atualização do fluxo.
 
-## como executar o projeto
+### 04 - Execução Integrada (`push: main`)
+*   **Gatilho:** Disparada automaticamente a cada `push` efetuado na branch principal (`main`).
+*   **Fluxo Sequencial de Jobs:**
+    1.  **Job Inspeção:** Executa a verificação estática de formatação e integridade via `yarn lint`.
+    2.  **Job Testes:** Roda os navegadores do Playwright e os testes estruturados do Mocha, gerando uma cobertura tripla de auditoria:
+        *   **Jest-JUnit:** Feedback instantâneo de erros nos checks nativos do GitHub.
+        *   **Mochawesome:** Relatório visual em formato HTML disponibilizado como artefato compactado.
+        *   **Allure Report:** Dashboard compilado via CLI e hospedado online de forma estática.
+        *   **CTRF Reporter:** Relatório inteligente com taxas de falhas, testes lentos e métricas de instabilidade (`flaky tests`).
+    3.  **Job Deploy:** Simula o deploy final em produção após o sucesso das fases anteriores.
 
-Clonar o repositório do projeto: git clone https://github.com/MarcelaVdosSantos/disciplina-programacao-automacao-desafio.git
-Entrar no diretório: cd disciplina-programacao-automacao-desafio
-Instalar as dependências: npm install -g yarn
-Execute os testes unitários: yarn run tes
 
-yarn add --dev mocha mocha-junit-reporter mochawesome mocha-multi-reporters
+## Relatório Allure Online
 
-instalação do pacote playwright
-yarn add -D playwright
+Os dashboards gráficos gerados pela pipeline de execução integrada são implantados automaticamente. Acesse o histórico pelo link:
 
-- Execução por push.
-- Execução manual.
-- Execução agendada (schedule).
-- Geração de relatório de testes.
-- Armazenamento/publicação do relatório na pipeline.
-- Criação de um README explicando a solução e os conceitos utilizados.
+**[Acessar Painel Allure Online](https://github.io)**
 
-# 🚀 Disciplina de Programação e Automação - Desafio
 
-Este projeto contém uma esteira automatizada de testes de integração e testes funcionais utilizando **Mocha** e **Playwright**. A pipeline está configurada para validar o estilo de código (Lint) e executar os testes de forma agendada no GitHub Actions.
+## Instalação e Execução Local
 
-## 🛠️ Tecnologias Utilizadas
+### Pré-requisitos
+Certifique-se de possuir o **Node.js (v22+)** e o gerenciador **Yarn** configurados.
 
-- **Node.js** (v22.x)
-- **Mocha** - Framework de Testes
-- **Playwright** - Automação de Navegador/Ambiente
-- **TypeScript / TSC** - Verificação estática de tipos
-- **Prettier** - Formatação de código
-- **GitHub Actions** - Integração Contínua (CI)
+### 1. Clonar e Instalar Dependências
+# Clone o repositório
+git clone https://github.com/MarcelaVdosSantos/ci-trabalho-final.git
 
-## 📋 Pré-requisitos
+# Acesse a pasta raiz
+cd ci-trabalho-final
 
-Antes de começar, você vai precisar ter instalado em sua máquina:
+# Instale os pacotes mapeados
+yarn install
 
-- [Git](https://git-scm.com)
-- [Node.js](https://nodejs.org)
-- [Yarn](https://yarnpkg.com) (Gerenciador de pacotes)
+# Instale os navegadores e dependências de sistema do Playwright
+yarn playwright install --with-deps
 
-## 🔧 Instalação Passo a Passo
-
-1. Clone este repositório para a sua máquina local:
-
-   ```bash
-   git clone https://github.com
-   ```
-
-2. Acesse a pasta do projeto:
-
-   ```bash
-   cd disciplina-programacao-automacao-desafio
-   ```
-
-3. Instale todas as dependências do projeto:
-
-   ```bash
-   yarn install
-   ```
-
-4. Instale os navegadores e dependências nativas necessárias para o Playwright:
-   ```bash
-   yarn playwright install --with-deps
-   ```
-
-## 🚀 Como Executar o Projeto Localmente
-
-### 1. Iniciar o Servidor Local
-
-Para subir o servidor web da aplicação e disponibilizar o site para os testes, execute:
-
-```bash
-yarn start
-```
-
-### 2. Executar a Validação de Código (Lint)
-
-Para checar se existem erros de sintaxe e se a formatação está dentro dos padrões definidos (TypeScript + Prettier):
-
-```bash
+### 2. Executar Linter e Validações de Código
 yarn lint
-```
 
-Se precisar corrigir automaticamente os espaços e formatações do código com o Prettier, você pode rodar:
+*Nota: Caso o Prettier acuse desalinhamento em arquivos YAML ou de texto, utilize o comando `npx prettier --write .` para corrigi-los instantaneamente.*
 
-```bash
-npx prettier --write .
-```
+### 3. Executar a Aplicação e os Testes
+# Inicie o servidor web local da aplicação
+yarn start
 
-### 3. Rodar os Testes Automatizados
-
-Com o servidor de desenvolvimento rodando, execute o comando abaixo em um novo terminal para iniciar os testes com o Mocha:
-
-```bash
+# Em um novo terminal, dispare a suíte de testes do Mocha
 yarn test
-```
-
-## ⚙️ Esteira de Integração Contínua (CI)
-
-O projeto possui uma pipeline configurada via GitHub Actions (`.github/workflows/`), que realiza os seguintes passos de forma automatizada:
-
-1. Valida a estrutura dos arquivos e configurações.
-2. Ativa o sistema de **Cache do Yarn** para agilizar execuções futuras.
-3. Roda a checagem estática do TypeScript e do Prettier (`yarn lint`).
-4. Executa todos os testes unitários/funcionais utilizando o Mocha (`yarn test`).
-5. Publica um relatório detalhado direto na aba de Actions do GitHub (`test-reporter`).
-6. Disponibiliza o download dos relatórios visuais HTML gerados pelo Mochawesome.
-
-**Disparo Agendado:** A pipeline está configurada para rodar de forma totalmente automática **todos os dias às 10:00 da manhã** (Horário de Brasília / 13:00 UTC).
