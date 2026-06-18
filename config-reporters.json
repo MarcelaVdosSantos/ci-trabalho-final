@@ -1,12 +1,14 @@
 {
-  "reporterEnabled": "mocha-junit-reporter, mochawesome",
+  "reporterEnabled": "mocha-junit-reporter, mochawesome, mocha-ctrf-json-reporter",
   "mochaJunitReporterReporterOptions": {
     "mochaFile": "results.xml"
   },
   "mochawesomeReporterOptions": {
     "reportDir": "mochawesome-report",
-    "reportFilename": "index",
-    "html": true,
-    "json": false
+    "quiet": true
+  },
+  "mochaCtrfJsonReporterReporterOptions": {
+    "outputDir": "ctrf",
+    "outputFile": "ctrf-report.json"
   }
 }
