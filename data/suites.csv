@@ -1,5 +1,5 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","2","Validar o login do usuário com e-mail, senha e credencial válidos","Testes do login do usuário","2026-06-19","passed","2026-06-19","","","",""
-"","1","Validar que usuário válido e senha inválida não realiza o login","Testes do login do usuário","2026-06-19","passed","2026-06-19","","","",""
 "","1","Validar que usuário e senha válidos, mas com credencial expirada não realiza o login","Testes do login do usuário","2026-06-19","passed","2026-06-19","","","",""
 "","1","Validar que usuário com e-mail não cadastrado não realiza o login","Testes do login do usuário","2026-06-19","passed","2026-06-19","","","",""
+"","2","Validar o login do usuário com e-mail, senha e credencial válidos","Testes do login do usuário","2026-06-19","passed","2026-06-19","","","",""
+"","0","Validar que usuário válido e senha inválida não realiza o login","Testes do login do usuário","2026-06-19","passed","2026-06-19","","","",""
