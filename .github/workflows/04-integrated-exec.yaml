@@ -1,4 +1,4 @@
-# CI 3º Nível - Pipeline Integrada ao Build do Código
+# CI 4º Nível - Pipeline Integrada ao Build do Código
 
 name: "04- Execução Integrada"
 
@@ -59,7 +59,7 @@ jobs:
       - name: Instalando as dependências
         run: yarn install
 
-      # CORREÇÃO: Instalar os browsers ANTES de rodar os testes
+      # Instalar os browsers ANTES de rodar os testes
       - name: Instalando os browsers e dependências do Playwright
         run: yarn playwright install --with-deps
 
@@ -75,7 +75,7 @@ jobs:
           path: results.xml
           reporter: jest-junit
 
-       Cavar Relatorio HTML para Download
+      # Salva a pasta HTML gerada pelo Mochawesome
       - name: Salvar Relatorio HTML para Download
         uses: actions/upload-artifact@v4
         if: ${{ always() }}
@@ -92,6 +92,7 @@ jobs:
         if: ${{ always() }}
         run: allure generate allure-results --clean -o allure-report
 
+      # Publica o relatório no GitHub Pages automaticamente
       - name: Publicar Relatório no GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         if: ${{ always() }}
