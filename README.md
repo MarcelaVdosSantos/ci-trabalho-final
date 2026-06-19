@@ -35,13 +35,13 @@ As esteiras de automação estão divididas em 4 fluxos complementares dentro da
 
 - **Gatilho:** Disparada automaticamente a cada `push` efetuado na branch principal (`main`).
 - **Fluxo Sequencial de Jobs:**
-  1.  **Job Inspeção:** Executa a verificação estática de formatação e integridade via `yarn lint`.
-  2.  **Job Testes:** Roda os navegadores do Playwright e os testes estruturados do Mocha, gerando uma cobertura tripla de auditoria:
+    **Job Inspeção:** Executa a verificação estática de formatação e integridade via `yarn lint`.
+    **Job Testes:** Roda os navegadores do Playwright e os testes estruturados do Mocha, gerando uma cobertura tripla de auditoria:
       - **Jest-JUnit:** Feedback instantâneo de erros nos checks nativos do GitHub.
       - **Mochawesome:** Relatório visual em formato HTML disponibilizado como artefato compactado.
       - **Allure Report:** Dashboard compilado via CLI e hospedado online de forma estática.
-      - **CTRF Reporter:** Relatório inteligente com taxas de falhas, testes lentos e métricas de instabilidade (`flaky tests`).
-  3.  **Job Deploy:** Simula o deploy final em produção após o sucesso das fases anteriores.
+      - **CTRF Reporter:** Relatório inteligente com taxas de falhas, testes lentos e métricas de instabilidade.
+    **Job Deploy:** Simula o deploy final em produção após o sucesso das fases anteriores.
 
 ## Relatório Allure Online
 
@@ -73,13 +73,13 @@ yarn install
 
 yarn playwright install --with-deps
 
-### 2. Executar Linter e Validações de Código
+### Executar Linter e Validações de Código
 
 yarn lint
 
 _Nota: Caso o Prettier acuse desalinhamento em arquivos YAML ou de texto, utilize o comando `npx prettier --write .` para corrigi-los instantaneamente._
 
-### 3. Executar a Aplicação e os Testes
+### Executar a Aplicação e os Testes
 
 # Inicie o servidor web local da aplicação
 
