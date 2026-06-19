@@ -1,103 +1,72 @@
 # CI 3º Nível - Pipeline Integrada ao Build do Código
 
-#nome da pipeline
 name: "04- Execução Integrada"
 
-#workflow
 on:
   workflow_dispatch:
-
-  #comando para que semper que houver um push na master a pipeline exeute
   push:
     branches:
       - main
 
-jobs:
-  #job inspecao
-  inspecao:
-    #máquina onde o job irá executar / utilizando a versão mais recente do Ubuntu
-    runs-on: ubuntu-latest
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
-    #passos que serão executados pelo job
+# Permissões necessárias para publicar no GitHub Pages e criar os reports
+permissions:
+  id-token: write
+  contents: write
+  checks: write
+  pull-requests: write
+
+jobs:
+  inspecao:
+    runs-on: ubuntu-latest
     steps:
-      #clonar o projeto
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      #instalação do nodejs
       - name: Instalando o Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x #não usar a última versão, pois as vezes gera alguns errros
-          cache: "yarn" # Agiliza as próximas execuções guardando as dependências em cache
+          node-version: 22.x
+          cache: "yarn"
 
-      #instalação do yarn
       - name: Instalando o yarn
         run: npm install -g yarn
 
-      #instalação de dependências
       - name: Instalando as dependências
         run: yarn install
 
-      # inspeção do código
       - name: Inspeção de Código
         run: yarn lint
 
-  #job test
-  testes1:
+  testes:
     runs-on: ubuntu-latest
     needs: [inspecao]
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout do código
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Instalando o Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 22.x
+          cache: "yarn"
 
-      #instalação do yarn
       - name: Instalando o yarn
         run: npm install -g yarn
 
-      #instalação de dependências
       - name: Instalando as dependências
         run: yarn install
 
-      #execução dos testes (gera o XML e o HTML juntos)
-      - name: Executando os testes
-        run: yarn run test
-
-  #job test - repetindo para gerar a sequência
-  testes2:
-    runs-on: ubuntu-latest
-    needs: [testes1]
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22.x
-
-      #instalação do yarn
-      - name: Instalando o yarn
-        run: npm install -g yarn
-
-      #instalação de dependências
-      - name: Instalando as dependências
-        run: yarn install
-
-      #execução dos testes (gera o XML e o HTML juntos)
-      - name: Executando os testes
-        run: yarn run test
-
-      # Instalação das dependências para o Playwright
+      # CORREÇÃO: Instalar os browsers ANTES de rodar os testes
       - name: Instalando os browsers e dependências do Playwright
-        run: |
-          yarn playwright install
-          yarn playwright install-deps
+        run: yarn playwright install --with-deps
 
-      #plugin lê o XML e exibe falhas no GitHub
+      # Executa os testes gerando JUnit XML, Mochawesome HTML, CTRF JSON e Allure Results juntos
+      - name: Executando os testes
+        run: yarn run test
+
       - name: Exibir Resultados no GitHub
         uses: dorny/test-reporter@v3
         if: ${{ always() }}
@@ -106,7 +75,7 @@ jobs:
           path: results.xml
           reporter: jest-junit
 
-      #salva a pasta HTML gerada pelo Mochawesome
+       Cavar Relatorio HTML para Download
       - name: Salvar Relatorio HTML para Download
         uses: actions/upload-artifact@v4
         if: ${{ always() }}
@@ -114,26 +83,23 @@ jobs:
           name: relatorio-testes-html
           path: mochawesome-report/
 
-      #relatório de testes Allure
-      #instala o utilitário nativo
+      # Geração do Dashboard Allure
       - name: Instalar utilitário do Allure
-        if: always()
+        if: ${{ always() }}
         run: npm install -g allure-commandline --save-dev
 
-      #gera o relatório HTML
       - name: Gerar Relatório HTML do Allure
-        if: always()
+        if: ${{ always() }}
         run: allure generate allure-results --clean -o allure-report
 
-      #publica o relatório no GitHub Pages automaticamente
       - name: Publicar Relatório no GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
-        if: always()
+        if: ${{ always() }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./allure-report
 
-      #plugin git-hub-test-reporter
+      # Plugin git-hub-test-reporter (CTRF)
       - name: Publish Test Report
         uses: ctrf-io/github-test-reporter@v1
         with:
@@ -148,11 +114,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ always() }}
 
-  #job deploy
   deploy:
     runs-on: ubuntu-latest
-    needs: [testes2]
-
+    needs: [testes]
     steps:
       - name: Simulação de Deploy
         run: echo 'Deploy sendo realizado!!'

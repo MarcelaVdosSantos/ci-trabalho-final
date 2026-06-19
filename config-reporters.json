@@ -1,5 +1,5 @@
 {
-  "reporterEnabled": "mocha-junit-reporter, mochawesome, mocha-ctrf-json-reporter",
+  "reporterEnabled": "mocha-junit-reporter, mochawesome, mocha-ctrf-json-reporter, allure-mocha",
   "mochaJunitReporterReporterOptions": {
     "mochaFile": "results.xml"
   },
@@ -10,5 +10,8 @@
   "mochaCtrfJsonReporterReporterOptions": {
     "outputDir": "ctrf",
     "outputFile": "ctrf-report.json"
+  },
+  "allureMochaReporterOptions": {
+    "resultsDir": "allure-results"
   }
 }
